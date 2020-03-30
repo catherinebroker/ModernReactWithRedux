@@ -1,35 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import SeasonDisplay from './SeasonDisplay';
+import LoadingSpinner from './LoadingSpinner';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
+  state = { lat: null, errorMessage: '' };
 
-    // This is the only time we do direct assignment to this.state
-    this.state = { lat: null, errorMessage: '' };
-
+  componentDidMount() {
     window.navigator.geolocation.getCurrentPosition(
-      (position) => {
-        // We called setState!!!!
-        this.setState({ lat: position.coords.latitude });
-      },
-      (err) => {
-        this.setState({ errorMessage: err.message });
-      }
+      (position) => this.setState({ lat: position.coords.latitude }),
+      (err) => this.setState({ errorMessage: err.message })
     );
   }
 
-  // React says we have to define render, or there will be an error.
-  render() {
+  renderContent() {
     if (this.state.errorMessage && !this.state.lat) {
       return <div>Error: {this.state.errorMessage}</div>
     }
 
     if (!this.state.errorMessage && this.state.lat) {
-      return <div>Latitude: {this.state.lat}</div>
+      return <SeasonDisplay lat={this.state.lat} />
     }
 
-    return <div>Loading!</div>;
+    return <LoadingSpinner message="Please accept loaction request" />;
+  }
+
+  // React says we have to define render, or there will be an error.
+  render() {
+    return (
+      <div style={{ border: '2px solid #222' }}>
+        {this.renderContent()}
+      </div>
+    )
   }
 }
 
