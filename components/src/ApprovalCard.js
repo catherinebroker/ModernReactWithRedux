@@ -1,8 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 const ApprovalCard = props => {
-  console.log(props.children);
   return (
     <div className="ui card">
       <div className="content">{props.children}</div>
