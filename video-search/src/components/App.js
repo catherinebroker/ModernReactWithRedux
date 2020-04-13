@@ -7,6 +7,10 @@ import VideoDetail from './VideoDetail';
 class App extends React.Component {
   state = { videos: [], selectedVideo: null };
 
+  componentDidMount() {
+    this.onTermSubmit('Nicholas Cage')
+  }
+
   onTermSubmit = async term => {
     const KEY = 'AIzaSyAFd5FsdJIeUZBENOPDq9tuIPezi4uFC0w';
 
@@ -19,7 +23,10 @@ class App extends React.Component {
       }
     });
 
-    this.setState({ videos: response.data.items });
+    this.setState({
+      videos: response.data.items,
+      selectedVideo: response.data.items[0]
+    });
   }
 
   onVideoSelect = video => {
