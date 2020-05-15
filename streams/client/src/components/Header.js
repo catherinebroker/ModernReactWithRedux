@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <div className="ui secondary pointing menu">
       <Link to="/" className="item">
-        Hot and Streamy
+        <img src={require('../logo.svg')} alt="Hot and Streamy Logo" />
       </Link>
       <div className="right menu">
         <Link to="/" className="item">
